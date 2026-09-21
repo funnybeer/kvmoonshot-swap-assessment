@@ -1,0 +1,11 @@
+node_modules/
+.npmrc
+.next/
+out/
+.env.local
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.DS_Store
+coverage/
+.vscode/*.log

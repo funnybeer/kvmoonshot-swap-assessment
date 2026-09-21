@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --brand: #3b82f6;
+  --brand-hover: #2563eb;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #050814;
+}
+
+@layer utilities {
+  .gradient-mesh {
+    background:
+      linear-gradient(180deg, rgba(5, 8, 20, 0.82) 0%, rgba(5, 8, 20, 0.94) 45%, rgba(5, 8, 20, 0.98) 100%),
+      url('/background.png') center top / cover no-repeat fixed;
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #fff 0%, #67e8f9 45%, #a78bfa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a3d; border-radius: 3px; }
