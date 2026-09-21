@@ -16,9 +16,7 @@ body {
 
 @layer utilities {
   .gradient-mesh {
-    background:
-      linear-gradient(180deg, rgba(5, 8, 20, 0.82) 0%, rgba(5, 8, 20, 0.94) 45%, rgba(5, 8, 20, 0.98) 100%),
-      url('/background.png') center top / cover no-repeat fixed;
+    background: #0a0e17;
   }
 
   .text-gradient {

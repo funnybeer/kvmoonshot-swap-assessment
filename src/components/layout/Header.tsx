@@ -5,11 +5,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 const NAV = [
-  { label: 'Exchange', href: '#swap', active: true },
-  { label: 'How it works', href: '#how-it-works', active: false },
-  { label: 'Security', href: '#security', active: false },
-  { label: 'FAQ', href: '#faq', active: false },
-  { label: 'Developers', href: 'https://kvmoonshot.cc/docs', active: false },
+  { label: 'Swap', href: '#swap', active: true },
+  { label: 'README', href: 'https://github.com/funnybeer/kvmoonshot-swap-assessment#assessment', active: false },
 ];
 
 export function Header() {
@@ -46,29 +43,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <div className="hidden items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400 sm:flex">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            All systems operational
-          </div>
-          <button
-            type="button"
-            className="hidden items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-zinc-400 transition-colors hover:text-white md:flex"
-          >
-            <Globe size={16} />
-            EN
-          </button>
-          <button
-            type="button"
-            className="hidden rounded-lg px-4 py-2 text-sm font-medium text-zinc-300 transition-colors hover:text-white lg:block"
-          >
-            Log in
-          </button>
-          <a
-            href="#swap"
-            className="hidden rounded-xl bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600 sm:inline-block"
-          >
-            Launch App
-          </a>
+          <span className="hidden rounded-md border border-surface-border px-2.5 py-1 font-mono text-[11px] text-zinc-500 sm:inline">
+            starter/v0.5.0
+          </span>
           <button
             type="button"
             className="rounded-lg p-2 text-zinc-400 lg:hidden"
