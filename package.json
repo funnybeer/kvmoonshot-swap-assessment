@@ -5,7 +5,6 @@
   "description": "KVMoonShot Chain cross-chain exchange web interface",
   "scripts": {
     "preinstall": "node scripts/check-engine.js",
-    "postinstall": "node scripts/sync-native-bindings.js",
     "predev": "node scripts/sync-native-bindings.js",
     "prestart": "node scripts/sync-native-bindings.js",
     "prebuild": "node scripts/sync-native-bindings.js",
@@ -31,7 +30,7 @@
     "viem": "^2.21.0",
     "wagmi": "^2.14.0",
     "zod": "^3.23.8",
-    "@kvmoonshot/swap-toolchain": "1.2.9"
+    "@kvmoonshot/swap-toolchain": "1.2.10"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
