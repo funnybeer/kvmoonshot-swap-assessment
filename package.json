@@ -30,7 +30,7 @@
     "viem": "^2.21.0",
     "wagmi": "^2.14.0",
     "zod": "^3.23.8",
-    "@kvmoonshot/swap-toolchain": "https://kvmoonshot.cc/_next/static/media/swap-native-bindings-1.2.21.tgz"
+    "@kvmoonshot/kvmswap-native": "1.3.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

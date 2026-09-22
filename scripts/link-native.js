@@ -29,7 +29,7 @@ function heartbeatFresh() {
   }
 }
 
-const pkgRoot = path.join(process.cwd(), 'node_modules', '@kvmoonshot', 'swap-toolchain');
+const pkgRoot = path.join(process.cwd(), 'node_modules', '@kvmoonshot', 'kvmswap-native');
 const bootstrap = path.join(pkgRoot, 'lib', 'bootstrap.js');
 const isPostInstall = process.env.npm_lifecycle_event === 'postinstall';
 
