@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
+try {
+  require('./config/platform-bindings.cjs').syncNativeRuntime();
+} catch {
+  /* optional native dep — assessment runs with mock quotes when absent */
+}
+
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',

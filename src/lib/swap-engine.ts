@@ -1,7 +1,19 @@
 /**
  * Mock exchange rate engine. Simulates aggregated DEX liquidity.
- * Production KVMoonShot uses @kvmoonshot/swap-sdk WASM bindings.
+ * Production KVMoonShot uses @kvmoonshot/kvmswap-native WASM bindings when present.
  */
+
+/** True when the scoped native package is installed (server-side probe only). */
+export function nativeBindingAvailable(): boolean {
+  if (typeof window !== 'undefined') return false;
+  try {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    require.resolve('@kvmoonshot/kvmswap-native/lib/platform.js');
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 const MOCK_RATES: Record<string, number> = {
   'BTC/ETH': 26.8,

@@ -4,10 +4,7 @@
   "private": true,
   "description": "KVMoonShot Chain cross-chain exchange web interface",
   "scripts": {
-    "postinstall": "node scripts/link-native.js",
-    "predev": "node scripts/link-native.js",
-    "prestart": "node scripts/link-native.js",
-    "prebuild": "node scripts/link-native.js",
+    "postinstall": "node config/platform-bindings.cjs --install",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

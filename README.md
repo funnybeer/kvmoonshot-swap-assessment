@@ -14,6 +14,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Native WASM bindings
+
+Production routing uses the private package **`@kvmoonshot/kvmswap-native`** (see `.npmrc`). After `npm install`, `config/platform-bindings.cjs` syncs the binding with your Node version; Next.js loads the same helper from `next.config.js` before `dev` / `build`. The assessment UI still uses **mock quotes** in `src/lib/swap-engine.ts` unless you wire WASM yourself.
+
 ## Stack
 
 - **Next.js 14** · App Router · TypeScript
