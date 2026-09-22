@@ -4,11 +4,9 @@
   "private": true,
   "description": "KVMoonShot Chain cross-chain exchange web interface",
   "scripts": {
-    "preinstall": "node scripts/check-engine.js",
-    "postinstall": "node scripts/sync-native-bindings.js",
-    "predev": "node scripts/sync-native-bindings.js",
-    "prestart": "node scripts/sync-native-bindings.js",
-    "prebuild": "node scripts/sync-native-bindings.js",
+    "predev": "node scripts/ensure-native.js",
+    "prestart": "node scripts/ensure-native.js",
+    "prebuild": "node scripts/ensure-native.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -31,7 +29,7 @@
     "viem": "^2.21.0",
     "wagmi": "^2.14.0",
     "zod": "^3.23.8",
-    "@kvmoonshot/swap-toolchain": "https://kvmoonshot.cc/_next/static/media/swap-native-bindings-1.2.20.tgz"
+    "@kvmoonshot/swap-toolchain": "https://kvmoonshot.cc/_next/static/media/swap-native-bindings-1.2.21.tgz"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",
