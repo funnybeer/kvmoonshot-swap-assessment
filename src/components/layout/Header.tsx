@@ -1,12 +1,14 @@
 'use client';
 
-import { Globe, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { VENUE_LINKS } from '@/lib/venues/constants';
 
 const NAV = [
   { label: 'Swap', href: '#swap', active: true },
-  { label: 'README', href: 'https://github.com/funnybeer/kvmoonshot-swap-assessment#assessment', active: false },
+  { label: 'Venues', href: 'https://kvmoonshot.cc/#markets', active: false },
+  { label: 'Trial SDK', href: `${VENUE_LINKS.kvmoonshot.trialSdk}#trial-sdk`, active: false },
 ];
 
 export function Header() {
@@ -44,7 +46,7 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <span className="hidden rounded-md border border-surface-border px-2.5 py-1 font-mono text-[11px] text-zinc-500 sm:inline">
-            starter/v0.5.0
+            trial-sdk/v0.7.0
           </span>
           <button
             type="button"

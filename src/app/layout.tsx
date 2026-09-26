@@ -2,21 +2,22 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'KVMoonShot Markets SDK | Integration trial',
+  title: 'KVMoonShot Trial SDK | Cross-venue strategy desk',
   description:
-    'Engineer trial package — Polymarket, Kalshi, CEX/DEX strategy hooks and native routing module.',
+    'Trial SDK — live Polymarket, Kalshi, CEX feeds, arb monitor, OpenAI/Claude copilot, DEX settlement.',
   keywords: [
     'kvmoonshot',
-    'markets sdk',
+    'trial sdk',
     'polymarket',
     'kalshi',
     'arbitrage',
+    'perps',
     'trading',
   ],
   metadataBase: new URL('https://kvmoonshot.cc'),
   openGraph: {
-    title: 'KVMoonShot Markets SDK | Integration trial',
-    description: 'Cross-venue strategy SDK starter for engineer assessment.',
+    title: 'KVMoonShot Trial SDK | Cross-venue strategy desk',
+    description: 'Professional trial package for multi-venue prediction market and CEX strategy integration.',
     url: 'https://kvmoonshot.cc',
     siteName: 'KV MoonShot',
     type: 'website',

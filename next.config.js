@@ -2,12 +2,11 @@
 try {
   require('./config/platform-bindings.cjs').syncNativeRuntime();
 } catch {
-  /* optional native dep — assessment runs with mock quotes when absent */
+  /* optional native module — mock feeds when absent */
 }
 
 const nextConfig = {
   reactStrictMode: true,
-  output: 'export',
   trailingSlash: true,
   images: { unoptimized: true },
   eslint: { ignoreDuringBuilds: true },

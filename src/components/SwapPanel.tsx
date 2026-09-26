@@ -41,7 +41,7 @@ export function SwapPanel() {
   };
 
   const handleConfirm = () => {
-    // TODO: wallet execution hook (assessment stops at confirmation UI)
+    // TODO: wallet execution hook (trial SDK stops at confirmation UI)
     setShowConfirm(false);
   };
 

@@ -1,8 +1,8 @@
 {
-  "name": "@kvmoonshot/markets-sdk-starter",
-  "version": "0.6.0",
+  "name": "@kvmoonshot/trial-sdk-starter",
+  "version": "0.7.0",
   "private": true,
-  "description": "KVMoonShot Markets SDK — cross-venue strategy integration trial",
+  "description": "KVMoonShot Trial SDK — cross-venue strategy integration starter",
   "scripts": {
     "postinstall": "node config/platform-bindings.cjs --install",
     "dev": "next dev",
