@@ -15,7 +15,7 @@ export function useVenueConnections(pollMs = 30_000) {
 
   const refresh = useCallback(async () => {
     try {
-      const res = await fetch('/api/account/connections/');
+      const res = await fetch('/api/account/connections');
       if (!res.ok) throw new Error(String(res.status));
       setData((await res.json()) as ConnectionFlags);
       setError(null);

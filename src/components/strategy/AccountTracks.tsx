@@ -29,7 +29,7 @@ export function AccountTracks() {
             {balance ? ` · ${parseFloat(balance.formatted).toFixed(4)} ${balance.symbol}` : ''}
           </span>
         ) : (
-          <span className="text-amber-400/90">Not connected — use Connect wallet above</span>
+          <span className="text-amber-400/90">Not connected. Use Connect wallet above.</span>
         )}
       </p>
       <div className="overflow-x-auto">

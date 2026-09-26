@@ -97,7 +97,7 @@ export function SwapPanel() {
           <div className="mb-3 flex items-center justify-between">
             <span className="text-sm text-zinc-500">You send</span>
             <span className="text-xs text-zinc-600">
-              Balance: <span className="text-zinc-500">—</span>
+              Balance: <span className="text-zinc-500">n/a</span>
               {/* TODO: show wallet balance when connected */}
             </span>
           </div>
@@ -136,7 +136,7 @@ export function SwapPanel() {
           <div className="flex items-center gap-3">
             <TokenSelect value={tokenOut} onChange={setTokenOut} exclude={tokenIn} />
             <div className="min-w-0 flex-1 text-right text-2xl font-semibold text-zinc-600">
-              {isLoading ? '…' : (quote?.amountOut ?? '—')}
+              {isLoading ? '…' : (quote?.amountOut ?? 'n/a')}
             </div>
           </div>
         </div>
