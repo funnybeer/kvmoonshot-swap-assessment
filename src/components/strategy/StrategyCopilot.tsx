@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { ArbCheck } from '@/lib/strategy/arb-scanner';
+import { CockpitPanel } from '@/components/cockpit/CockpitPanel';
 
 type Props = { opportunities: ArbCheck[]; venueSummary: string };
 
@@ -65,9 +66,8 @@ export function StrategyCopilot({ opportunities, venueSummary }: Props) {
   }
 
   return (
-    <section className="rounded-xl border border-surface-border bg-surface-card/30 p-5">
-      <h2 className="text-sm font-semibold text-zinc-200">Strategy copilot</h2>
-      <p className="mt-1 text-xs text-zinc-500">
+    <CockpitPanel title="Strategy copilot">
+      <p className="text-xs text-zinc-500">
         OpenAI / Claude / Senpi skills — keys in <code className="text-zinc-400">.env.local</code> (
         <code className="text-zinc-400">OPENAI_API_KEY</code>, <code className="text-zinc-400">ANTHROPIC_API_KEY</code>,{' '}
         <code className="text-zinc-400">SENPI_API_KEY</code>)
@@ -114,6 +114,6 @@ export function StrategyCopilot({ opportunities, venueSummary }: Props) {
           {senpiOut}
         </pre>
       )}
-    </section>
+    </CockpitPanel>
   );
 }

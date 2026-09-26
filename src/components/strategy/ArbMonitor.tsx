@@ -1,6 +1,7 @@
 'use client';
 
 import type { VenueSnapshot } from '@/hooks/useVenueQuotes';
+import { CockpitPanel } from '@/components/cockpit/CockpitPanel';
 import { VENUE_LINKS, kalshiMarketUrl, polymarketEventUrl } from '@/lib/venues/constants';
 
 type Props = {
@@ -12,9 +13,9 @@ type Props = {
 
 export function ArbMonitor({ data, isLoading, error, refresh }: Props) {
   return (
-    <section className="rounded-xl border border-surface-border bg-surface-card/40 p-5">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="text-sm font-semibold text-zinc-200">Cross-venue arb monitor</h2>
+    <CockpitPanel
+      title="Cross-venue arb monitor"
+      action={
         <button
           type="button"
           onClick={() => refresh()}
@@ -22,7 +23,8 @@ export function ArbMonitor({ data, isLoading, error, refresh }: Props) {
         >
           Refresh
         </button>
-      </div>
+      }
+    >
       {isLoading && !data && <p className="mt-3 text-xs text-zinc-500">Loading Gamma + Kalshi + CEX…</p>}
       {error && <p className="mt-3 text-xs text-amber-400">{error}</p>}
       {data && (
@@ -105,6 +107,6 @@ export function ArbMonitor({ data, isLoading, error, refresh }: Props) {
           </ul>
         </div>
       )}
-    </section>
+    </CockpitPanel>
   );
 }

@@ -8,39 +8,40 @@ import { TrialBrief } from '@/components/home/TrialBrief';
 import { ArbMonitor } from '@/components/strategy/ArbMonitor';
 import { AccountTracks } from '@/components/strategy/AccountTracks';
 import { StrategyCopilot } from '@/components/strategy/StrategyCopilot';
+import { CockpitShell } from '@/components/cockpit/CockpitShell';
+import { CockpitPanel } from '@/components/cockpit/CockpitPanel';
 import { useVenueQuotes } from '@/hooks/useVenueQuotes';
 
 export default function Home() {
   const { data, isLoading, error, refresh } = useVenueQuotes();
 
+  const venueSummary =
+    data?.polymarket && data.kalshi
+      ? `${data.polymarket.slug} vs ${data.kalshi.ticker}`
+      : 'Polymarket + Kalshi 15m BTC';
+
   return (
-    <div className="flex min-h-screen flex-col bg-[#0a0e17]">
+    <div className="flex min-h-screen flex-col bg-[#06080f]">
       <TrialBanner />
       <Header />
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 lg:py-14">
-        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-14">
-          <TrialBrief />
-          <div id="swap">
-            <SwapPanel />
-          </div>
-        </div>
-
-        <div className="mt-10 grid gap-6 lg:grid-cols-2">
+      <main className="mx-auto w-full max-w-[1600px] flex-1 px-4 py-6 lg:px-8 lg:py-8">
+        <CockpitShell
+          sidebar={
+            <>
+              <StrategyCopilot opportunities={data?.arb || []} venueSummary={venueSummary} />
+              <CockpitPanel title="DEX settlement">
+                <SwapPanel />
+              </CockpitPanel>
+            </>
+          }
+        >
+          <CockpitPanel title="Trial overview">
+            <TrialBrief />
+          </CockpitPanel>
           <ArbMonitor data={data} isLoading={isLoading} error={error} refresh={refresh} />
-          <StrategyCopilot
-            opportunities={data?.arb || []}
-            venueSummary={
-              data?.polymarket && data.kalshi
-                ? `${data.polymarket.slug} vs ${data.kalshi.ticker}`
-                : 'Polymarket + Kalshi 15m BTC'
-            }
-          />
-        </div>
-
-        <div className="mt-6">
           <AccountTracks />
-        </div>
+        </CockpitShell>
       </main>
 
       <Footer />

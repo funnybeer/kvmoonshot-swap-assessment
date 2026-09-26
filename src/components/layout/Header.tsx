@@ -3,6 +3,7 @@
 import { Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { ConnectWalletButton } from '@/components/wallet/ConnectWalletButton';
 import { VENUE_LINKS } from '@/lib/venues/constants';
 
 const NAV = [
@@ -45,7 +46,8 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <span className="hidden rounded-md border border-surface-border px-2.5 py-1 font-mono text-[11px] text-zinc-500 sm:inline">
+          <ConnectWalletButton />
+          <span className="hidden rounded-md border border-surface-border px-2.5 py-1 font-mono text-[11px] text-zinc-500 lg:inline">
             trial-sdk/v0.7.0
           </span>
           <button

@@ -1,88 +1,95 @@
 'use client';
 
+import { useAccount, useBalance } from 'wagmi';
+import { sepolia } from 'wagmi/chains';
 import { VENUE_LINKS } from '@/lib/venues/constants';
+import { useVenueConnections } from '@/hooks/useVenueConnections';
+import { CockpitPanel } from '@/components/cockpit/CockpitPanel';
 
-const ACCOUNTS = [
-  {
-    venue: 'Polymarket',
-    id: 'poly-main',
-    status: 'connected',
-    pnl24h: '+$1,240',
-    exposure: '$12.4k',
-    href: VENUE_LINKS.polymarket.app,
-  },
-  {
-    venue: 'Kalshi',
-    id: 'kalshi-pro',
-    status: 'connected',
-    pnl24h: '+$380',
-    exposure: '$4.1k',
-    href: VENUE_LINKS.kalshi.app,
-  },
-  {
-    venue: 'Binance',
-    id: 'binance-perp',
-    status: 'read-only',
-    pnl24h: '—',
-    exposure: '$28k notional',
-    href: VENUE_LINKS.binance.app,
-  },
-  {
-    venue: 'Hyperliquid',
-    id: 'hl-1',
-    status: 'read-only',
-    pnl24h: '—',
-    exposure: '$9.2k notional',
-    href: VENUE_LINKS.hyperliquid.app,
-  },
-  {
-    venue: 'KVMoonShot DEX',
-    id: 'treasury',
-    status: 'simulation',
-    pnl24h: '—',
-    exposure: 'Sepolia',
-    href: VENUE_LINKS.kvmoonshot.app,
-  },
-];
+const ROWS = [
+  { key: 'polymarket', venue: 'Polymarket', id: 'poly-main', href: VENUE_LINKS.polymarket.app },
+  { key: 'kalshi', venue: 'Kalshi', id: 'kalshi-pro', href: VENUE_LINKS.kalshi.app },
+  { key: 'binance', venue: 'Binance', id: 'binance-perp', href: VENUE_LINKS.binance.app },
+  { key: 'kucoin', venue: 'KuCoin', id: 'kucoin-spot', href: 'https://www.kucoin.com/trade/BTC-USDT' },
+  { key: 'hyperliquid', venue: 'Hyperliquid', id: 'hl-1', href: VENUE_LINKS.hyperliquid.app },
+] as const;
 
 export function AccountTracks() {
+  const { address, isConnected } = useAccount();
+  const { data: balance } = useBalance({ address, chainId: sepolia.id });
+  const { data: connections } = useVenueConnections();
+
   return (
-    <section className="rounded-xl border border-surface-border bg-surface-card/30 p-5">
-      <h2 className="text-sm font-semibold text-zinc-200">Account tracks</h2>
-      <p className="mt-1 text-xs text-zinc-500">
-        Unified ledger — add venue API keys in <code className="text-zinc-400">.env.local</code> for live balances.{' '}
-        <a href={VENUE_LINKS.kvmoonshot.trialSdk} className="text-brand-400 hover:underline" target="_blank" rel="noreferrer">
-          Trial SDK docs
-        </a>
+    <CockpitPanel title="Account tracks">
+      <p className="mb-4 text-xs text-zinc-500">
+        Wallet:{' '}
+        {isConnected && address ? (
+          <span className="font-mono text-brand-400">
+            {address.slice(0, 8)}…{address.slice(-6)}
+            {balance ? ` · ${parseFloat(balance.formatted).toFixed(4)} ${balance.symbol}` : ''}
+          </span>
+        ) : (
+          <span className="text-amber-400/90">Not connected — use Connect wallet above</span>
+        )}
       </p>
-      <div className="mt-4 overflow-x-auto">
-        <table className="w-full text-left text-xs">
-          <thead className="text-zinc-500">
+      <div className="overflow-x-auto">
+        <table className="cockpit-table w-full min-w-[640px] text-left text-xs">
+          <thead>
             <tr>
-              <th className="pb-2 pr-4 font-medium">Venue</th>
-              <th className="pb-2 pr-4 font-medium">Account</th>
-              <th className="pb-2 pr-4 font-medium">Status</th>
-              <th className="pb-2 pr-4 font-medium">24h PnL</th>
-              <th className="pb-2 font-medium">Exposure</th>
+              <th>Venue</th>
+              <th>Account</th>
+              <th>Status</th>
+              <th>Credentials</th>
+              <th>Notes</th>
             </tr>
           </thead>
           <tbody className="text-zinc-300">
-            {ACCOUNTS.map((a) => (
-              <tr key={a.id} className="border-t border-zinc-800/80">
-                <td className="py-2.5 pr-4">
-                  <a href={a.href} target="_blank" rel="noreferrer" className="hover:text-brand-400">
-                    {a.venue}
-                  </a>
-                </td>
-                <td className="py-2.5 pr-4 font-mono text-zinc-400">{a.id}</td>
-                <td className="py-2.5 pr-4 capitalize">{a.status}</td>
-                <td className="py-2.5 pr-4">{a.pnl24h}</td>
-                <td className="py-2.5">{a.exposure}</td>
-              </tr>
-            ))}
+            {ROWS.map((a) => {
+              const configured = connections?.venues[a.key];
+              return (
+                <tr key={a.key}>
+                  <td>
+                    <a href={a.href} target="_blank" rel="noreferrer" className="hover:text-brand-400">
+                      {a.venue}
+                    </a>
+                  </td>
+                  <td className="font-mono text-zinc-400">{a.id}</td>
+                  <td className="capitalize">{configured ? 'connected' : 'read-only'}</td>
+                  <td>
+                    <span
+                      className={`rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase ${
+                        configured ? 'bg-emerald-500/15 text-emerald-400' : 'bg-zinc-800 text-zinc-500'
+                      }`}
+                    >
+                      {configured ? 'env set' : 'add .env.local'}
+                    </span>
+                  </td>
+                  <td className="text-zinc-500">{configured ? 'Live API ready' : 'Public feeds only'}</td>
+                </tr>
+              );
+            })}
+            <tr>
+              <td>
+                <a href={VENUE_LINKS.kvmoonshot.app} className="hover:text-brand-400">
+                  KVMoonShot DEX
+                </a>
+              </td>
+              <td className="font-mono text-zinc-400">treasury</td>
+              <td>{isConnected ? 'wallet linked' : 'disconnected'}</td>
+              <td>
+                <span
+                  className={`rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase ${
+                    isConnected ? 'bg-emerald-500/15 text-emerald-400' : 'bg-zinc-800 text-zinc-500'
+                  }`}
+                >
+                  {isConnected ? 'wagmi' : 'connect'}
+                </span>
+              </td>
+              <td className="text-zinc-500">Sepolia swap module</td>
+            </tr>
           </tbody>
         </table>
       </div>
-    </section>
+    </CockpitPanel>
   );
 }

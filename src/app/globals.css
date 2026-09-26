@@ -9,6 +9,18 @@
   --brand-hover: #2563eb;
 }
 
+@layer components {
+  .cockpit-table th {
+    @apply pb-3 pr-4 text-left text-[10px] font-semibold uppercase tracking-wider text-zinc-500;
+  }
+  .cockpit-table td {
+    @apply border-t border-surface-border/80 py-3 pr-4;
+  }
+  .cockpit-table tbody tr {
+    @apply transition-colors hover:bg-surface-elevated/40;
+  }
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background: #050814;

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useAccount } from 'wagmi';
 import { ArrowDownUp, Settings2, Zap } from 'lucide-react';
 import { useSwapQuote } from '@/hooks/useSwapQuote';
 import { TokenSelect } from '@/components/swap/TokenSelect';
@@ -12,6 +13,7 @@ import { getToken } from '@/lib/tokens';
 type RateType = 'fixed' | 'float';
 
 export function SwapPanel() {
+  const { isConnected, address } = useAccount();
   const [tokenIn, setTokenIn] = useState('ETH');
   const [tokenOut, setTokenOut] = useState('USDC');
   const [amountIn, setAmountIn] = useState('');
@@ -35,7 +37,7 @@ export function SwapPanel() {
   };
 
   const handleSwap = () => {
-    // TODO: validate quote + open confirmation modal
+    if (!isConnected) return;
     if (!quote || !amountIn) return;
     setShowConfirm(true);
   };
@@ -158,12 +160,17 @@ export function SwapPanel() {
         <button
           type="button"
           onClick={handleSwap}
-          disabled={!quote || isLoading || !amountIn}
+          disabled={!isConnected || !quote || isLoading || !amountIn}
           className="mt-5 flex w-full items-center justify-center gap-2 rounded-2xl bg-brand-500 py-4 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-40 disabled:shadow-none"
         >
           <Zap size={18} />
-          Review swap
+          {!isConnected ? 'Connect wallet to swap' : 'Review swap'}
         </button>
+        {isConnected && address && (
+          <p className="mt-2 text-center font-mono text-[10px] text-zinc-600">
+            Signing as {address.slice(0, 6)}…{address.slice(-4)}
+          </p>
+        )}
 
         {!quote && amountIn && (
           <p className="mt-2 text-center text-xs text-zinc-600">
