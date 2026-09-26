@@ -16,11 +16,12 @@ export default function Home() {
           <SwapPanel />
         </div>
 
-        <section className="mt-14 rounded-xl border border-dashed border-surface-border/80 bg-surface-card/20 p-6">
-          <h2 className="text-sm font-medium text-zinc-400">Landing sections (not in scope)</h2>
-          <p className="mt-2 text-sm text-zinc-600">
-            Stats, partner logos, FAQ, and security blocks from the public site were omitted here on purpose. Focus on
-            the swap flow; do not spend time polishing marketing copy.
+        <section className="mt-14 rounded-xl border border-surface-border/80 bg-surface-card/30 p-6">
+          <h2 className="text-sm font-semibold text-zinc-300">Strategy module (your work)</h2>
+          <p className="mt-2 text-sm text-zinc-500">
+            Implement <code className="text-zinc-400">ArbMonitor</code> here after{' '}
+            <code className="text-zinc-400">useVenueQuotes</code>. Mock scan margin today:{' '}
+            <span className="font-mono text-emerald-500/90">see arb-scanner.test.ts</span>
           </p>
         </section>
       </main>

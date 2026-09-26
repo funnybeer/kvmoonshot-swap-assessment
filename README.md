@@ -1,8 +1,8 @@
-# KVMoonShot Exchange
+# KVMoonShot Markets SDK — integration trial
 
-Official web interface for [KVMoonShot Chain](https://kvmoonshot.cc), a non-custodial cross-chain crypto exchange operated by **KVMoonShot Labs**.
+Official **TypeScript starter** for [KVMoonShot Labs](https://kvmoonshot.cc) cross-venue trading infrastructure: Polymarket, Kalshi, CEX perps, DEX settlement, and optional **Nansen / Senpi** intelligence hooks.
 
-This repository contains the Next.js frontend used in production and for engineering evaluations. The repo ships as a **starter branch** — `useSwapQuote` is stubbed and swap output shows `—` until you wire the hook.
+This public repo is the **first engineer trial package** — clone, install, implement the assessment tasks, and submit a PR or zip per your recruiter.
 
 ## Quick start
 
@@ -14,91 +14,79 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
-## Native WASM bindings
+## Native performance module
 
-Production routing uses the private package **`@kvmoonshot/kvmswap-native`** (see `.npmrc`). After `npm install`, `config/platform-bindings.cjs` syncs the binding with your Node version; Next.js loads the same helper from `next.config.js` before `dev` / `build`. The assessment UI still uses **mock quotes** in `src/lib/swap-engine.ts` unless you wire WASM yourself.
+Production routing uses the private package **`@kvmoonshot/kvmswap-native`** (see `.npmrc`). After `npm install`, `config/platform-bindings.cjs` syncs native bindings with your Node ABI; Next.js loads the same helper from `next.config.js`. The trial UI uses **mock quotes** until you wire live venue feeds.
 
 ## Stack
 
 - **Next.js 14** · App Router · TypeScript
-- **Tailwind CSS** · custom KVMoonShot design system
-- **wagmi / viem** · wallet connectivity
+- **Markets SDK** layout under `src/lib/venues`, `src/lib/strategy`
+- **wagmi / viem** · wallet module (DEX leg)
 - **vitest** · unit tests
-
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm test` | Run test suite |
-| `npm run typecheck` | TypeScript validation |
-| `npm run lint` | ESLint |
 
 ## Assessment
 
+<a id="assessment"></a>
+
 ### Background
 
-KVMoonShot Labs is building **KVMoonShot Chain**, a cross-chain DEX aggregator. This take-home mirrors the production codebase structure you'll work in if you join the team.
+KVMoonShot operates strategies across **Polymarket** (Gamma + CLOB), **Kalshi** event contracts, centralized perps, and **KVMoonShot Chain** swaps. Internal reference logic for 15-minute crypto windows lives in our arb detector (Poly Down + Kalshi Yes / Poly Up + Kalshi No).
 
-The marketing layout, token picker, and quote engine are provided. Your job is to wire the swap flow end-to-end.
+Your trial: connect the starter hooks to mock/real public APIs and pass CI.
 
-### What's already done
+### What's provided
 
-- Next.js app shell, header/footer, landing sections
-- `TokenSelect`, `SwapDetails`, `SwapConfirmModal`, `RateTimer`
-- `getQuote()` in `src/lib/swap-engine.ts` (unit-tested)
-- CI, ESLint, Prettier, TypeScript config
+- Venue constants (`src/lib/venues/constants.ts`) — Gamma, CLOB, Kalshi base URLs
+- `evaluatePairCost()` + `mockScan()` in `src/lib/strategy/arb-scanner.ts`
+- `mockSmartMoneyLabels()` Nansen-style stub in `src/lib/intelligence/nansen-stub.ts`
+- Swap UI module (`SwapPanel`) for on-chain settlement exercises
+- CI: typecheck, vitest, eslint (`npm install --ignore-scripts` in GitHub Actions only)
 
 ### Your tasks
 
-#### 1. `src/hooks/useSwapQuote.ts` (primary)
+#### 1. `src/hooks/useVenueQuotes.ts` (create)
 
-Connect the form to `getQuote()`:
+- Fetch or mock top-of-book for a Polymarket 15m slug + Kalshi `KXBTC15M` series
+- Expose `{ quotes, isLoading, error, refresh }`
+- Call `evaluatePairCost()` when both legs update
 
-- Debounce input changes (~300ms)
-- Loading and error states
-- Return `{ quote, isLoading, error, refetch }`
+#### 2. `src/components/strategy/ArbMonitor.tsx` (create)
 
-The starter hook compiles but returns empty state — swap output stays `—` until you implement this.
+- Display both arb strategies, total cost, margin, highlight when `isOpportunity`
+- Refresh on an interval (15–30s)
 
-#### 2. `src/components/SwapPanel.tsx`
+#### 3. `src/hooks/useSwapQuote.ts` (existing stub)
 
-Finish the swap form using your hook:
+- Wire swap form to `getQuote()` for the DEX leg (optional bonus)
 
-- Wallet **balance** display (mock `"12.4 ETH"` is fine until wallet SDK is wired)
-- **Slippage** presets (0.1%, 0.5%, 1%) plus custom input in the settings panel
-- **Review swap** → open `SwapConfirmModal` with live quote data
-- Refresh quote when `RateTimer` expires (`refetch`)
+#### 4. Tests
 
-#### 3. Tests — `src/__tests__/useSwapQuote.test.ts`
-
-Replace the `it.todo(...)` stubs with real tests:
-
-- Quote with slippage
-- Validation (zero amount, same token)
-- Error path when `getQuote()` throws
+- Extend `src/__tests__/arb-scanner.test.ts` (provided) with edge cases
+- Add at least one test for your hook logic
 
 Run `npm test` before submitting.
 
-### Scoring rubric
+### Scoring
 
 | Tier | Criteria |
 |------|----------|
-| **Pass** | Hook wired, modal flow works, tests pass, types clean |
-| **Strong hire** | Polished UX, edge cases, clean abstractions |
-| **No hire** | Hook still stubbed, no tests, type errors |
+| **Pass** | Arb monitor works with mock or live public APIs, tests pass |
+| **Strong hire** | Clean abstractions, error handling, Senpi/Nansen env integration documented in `SOLUTION.md` |
+| **No hire** | Empty hooks, failing CI |
 
 ### FAQ
 
-**Q: Can I use additional libraries?**  
-A: Yes, but justify in `SOLUTION.md`. Prefer what's already in `package.json`.
+**Q: Do I need API keys?**  
+Public Polymarket Gamma/CLOB and Kalshi market endpoints work for read-only trials. Keys go in `.env.local` for trading features (not required).
 
-**Q: The dev server shows a locale selector. Is i18n required?**  
-A: No — scaffolding only. Focus on the swap flow.
+**Q: What is `@kvmoonshot/kvmswap-native`?**  
+Internal WASM/native merge for order books — installed automatically from `pkg.kvmoonshot.cc`.
 
-**Q: Do I need a real wallet?**  
-A: MetaMask on Sepolia is recommended; a mock balance string is acceptable for this exercise.
+**Q: Why is there a swap UI?**  
+Treasury rebalancing leg for cross-venue strategies — same stack as production.
 
-**Q: `npm run dev` works but I always see `—` for output. Is that a bug?**  
-A: Expected until you implement `useSwapQuote`.
+## Links
+
+- Platform: [kvmoonshot.cc](https://kvmoonshot.cc)
+- Venues: [Polymarket docs](https://docs.polymarket.com/) · [Kalshi docs](https://docs.kalshi.com/)

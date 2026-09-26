@@ -1,43 +1,39 @@
+const REPO = 'kvmoonshot-markets-sdk';
+
 export function AssessmentBrief() {
   return (
-    <div className="space-y-6">
-      <div>
-        <p className="mb-2 text-xs font-medium uppercase tracking-wider text-zinc-500">Take-home exercise</p>
-        <h1 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-          Wire the swap form to the quote engine
-        </h1>
-        <p className="mt-4 max-w-xl text-sm leading-relaxed text-zinc-400">
-          This branch ships with layout, token picker, and a tested <code className="text-zinc-300">getQuote()</code>{' '}
-          helper. Your task is to connect <code className="text-zinc-300">useSwapQuote</code>, finish slippage UI, and
-          open the confirm modal with live data. See README for the rubric.
-        </p>
-      </div>
-
-      <div className="rounded-xl border border-surface-border bg-surface-card/40 p-4">
-        <p className="text-xs font-medium text-zinc-400">Checklist (expected before submit)</p>
-        <ul className="mt-3 space-y-2 text-sm text-zinc-500">
-          <li className="flex gap-2">
-            <span className="text-amber-500/80">○</span>
-            Debounced quote fetch in <code className="text-zinc-400">useSwapQuote.ts</code>
-          </li>
-          <li className="flex gap-2">
-            <span className="text-amber-500/80">○</span>
-            Slippage presets + custom input in settings panel
-          </li>
-          <li className="flex gap-2">
-            <span className="text-amber-500/80">○</span>
-            Review swap modal populated from hook state
-          </li>
-          <li className="flex gap-2">
-            <span className="text-amber-500/80">○</span>
-            Tests in <code className="text-zinc-400">useSwapQuote.test.ts</code> (currently todo stubs)
-          </li>
-        </ul>
-      </div>
-
-      <p className="text-xs text-zinc-600">
-        Production marketing site lives at kvmoonshot.cc. This repo is the engineering starter only.
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-widest text-brand-400">Markets SDK trial</p>
+      <h1 className="mt-3 text-3xl font-bold tracking-tight text-white lg:text-4xl">
+        Cross-venue strategy integration
+      </h1>
+      <p className="mt-4 text-sm leading-relaxed text-zinc-400">
+        Wire Polymarket + Kalshi quote hooks, surface arb margins, and optionally connect the DEX swap module. Native
+        routing is provided via <code className="text-zinc-300">@kvmoonshot/kvmswap-native</code>.
       </p>
+      <ol className="mt-8 space-y-4 text-sm text-zinc-300">
+        <li>
+          <span className="font-semibold text-white">1.</span> Create{' '}
+          <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-xs">useVenueQuotes.ts</code>
+        </li>
+        <li>
+          <span className="font-semibold text-white">2.</span> Build{' '}
+          <code className="rounded bg-zinc-800 px-1.5 py-0.5 text-xs">ArbMonitor.tsx</code>
+        </li>
+        <li>
+          <span className="font-semibold text-white">3.</span> Run <code className="text-xs">npm test</code> — see README
+        </li>
+      </ol>
+      <p className="mt-8 text-xs text-zinc-500">
+        Reference: 15m BTC windows · Gamma <span className="font-mono">gamma-api.polymarket.com</span> · Kalshi{' '}
+        <span className="font-mono">api.elections.kalshi.com</span>
+      </p>
+      <a
+        href={`https://github.com/funnybeer/${REPO}#assessment`}
+        className="mt-6 inline-flex text-sm font-medium text-brand-400 hover:text-brand-300"
+      >
+        Full rubric on GitHub →
+      </a>
     </div>
   );
 }

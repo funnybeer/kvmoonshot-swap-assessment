@@ -2,21 +2,21 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'KV MoonShot | Cross-Chain Crypto Exchange',
+  title: 'KVMoonShot Markets SDK | Integration trial',
   description:
-    'Swap crypto on KVMoonShot Chain. Non-custodial exchange with fixed and floating rates.',
+    'Engineer trial package — Polymarket, Kalshi, CEX/DEX strategy hooks and native routing module.',
   keywords: [
     'kvmoonshot',
-    'crypto exchange',
-    'cross-chain swap',
-    'bitcoin exchange',
-    'defi',
-    'non-custodial',
+    'markets sdk',
+    'polymarket',
+    'kalshi',
+    'arbitrage',
+    'trading',
   ],
   metadataBase: new URL('https://kvmoonshot.cc'),
   openGraph: {
-    title: 'KV MoonShot | Cross-Chain Crypto Exchange',
-    description: 'Cross-chain swaps with fixed and floating rates.',
+    title: 'KVMoonShot Markets SDK | Integration trial',
+    description: 'Cross-venue strategy SDK starter for engineer assessment.',
     url: 'https://kvmoonshot.cc',
     siteName: 'KV MoonShot',
     type: 'website',
